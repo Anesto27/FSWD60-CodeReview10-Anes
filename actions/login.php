@@ -49,13 +49,6 @@ if (!$error) {
         }
       }
   }
-  if (isset($_POST['logout'])) {
-    unset($_SESSION['customer']);
-    session_unset();
-    session_destroy();
-    header("Location: index.php");
-    exit;
-  }
 
 ?>
 <!DOCTYPE html>
@@ -109,12 +102,13 @@ if (!$error) {
         width: 80px;
         color: white;
         background-color: red;
+        margin-bottom: 150px;
       }
 
       .btn-danger p{
         color: white;
         margin-left: 20px;
-        padding-top: 10px;
+        padding-top: 15px;
          margin-top: 40px;
       }
 
@@ -126,12 +120,25 @@ if (!$error) {
         margin-bottom: 150px;
         margin-top: 50px;
       }
+
+      #active a{
+        margin-left: 270px;
+      }
       
+        .btn-name{
+      color: white;
+      background-color: red;
+      height: 50px;
+      width: 80px;
+      border-radius: 5px;
+      padding-left: 12px;
+      padding-top: 14px;
+    }
     </style>
 
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -154,7 +161,7 @@ if (!$error) {
       <?php
         if (isset($_SESSION['customer'])) {
           $displayName = $userRow['first_name']. " ". $userRow['last_name'];
-          echo '<i class="fas fa-sign-out-alt"></i> '.$displayName;
+          echo '<div class="btn-name" href="logout.php?logout">Logout</div>'.$displayName;
         }
         else {
           echo '<i class="fas fa-sign-in-alt"></i> Login';
@@ -172,9 +179,9 @@ if (!$error) {
     <?php 
         if(isset($_SESSION['customer'])) {
           echo '
-          <from method_"POST">
-            <input class="btn btn-danger" type="submit" name="logout"
-            value="Sign out">
+          <from method"POST">
+            <a class="btn btn-danger"
+            href="logout.php?logout">Logout</a>
             </form>';
         }else{
           echo '  
@@ -182,7 +189,7 @@ if (!$error) {
             <span><?php echo $errMSG ?></span>
             <input class="field" type="text" name="email" placeholder="Email">
             <span><?php echo $emailError ?></span>
-            <input class="field" type="password" name="password" value="'.$password. '" placeholder="Password">
+            <input class="field" type="password" name="password" placeholder="Password">
             <span><?php echo $passwordError ?></span>
             <div class="row">
             <div class="col-lg-3">

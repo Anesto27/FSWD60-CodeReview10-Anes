@@ -73,11 +73,10 @@ if( isset( $_GET['id'])) {
         transform: translateY(-1px);
       }
 
-      .btn-success{
+      .btn-primary{
         height: 50px;
         width: 100px;
         margin-top: 40px;
-        margin-left: 400px;
         margin-bottom: 150px;
       }
 

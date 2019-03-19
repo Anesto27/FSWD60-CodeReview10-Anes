@@ -20,17 +20,19 @@
 
   }
 
-  if(isset($_POST['update'])) {
-    $title = $_POST['title'];
-    $descrp = $_POST['descrp'];
-    $price = $_POST['price'];
-    $author = $_POST['author'];
+  if(isset($_GET['update'])) {
+    $id = $_GET["id"];
     $publisher = $_POST['publisher'];
     $title = trim($_POST['title']);
     $descrp = trim($_POST['descrp']);
+    $price= $_POST["price"];
     $author = trim($_POST['author']);
 
-    $sql = "UPDATE `media` SET title = '$title', descrp = '$desc', borrow_price = '$price', fk_author_id = '$author', fk_publisher_id = '$publisher' WHERE media_id = {$id}";
+    $sql = "UPDATE `media` SET title = '$title',
+     descrp = '$descrp',
+      borrow_price = $price,
+       fk_author_id = $author,
+        fk_publisher_id = $publisher WHERE media_id = {$id}";
     if($mysqli->query($sql) === TRUE) {
       header("Location: a_update.php");
     } else {
@@ -91,14 +93,17 @@
         transform: translateX(-400px);
       }
 
-      .btn-primary{
+      .btn-success{
         height: 50px;
         width: 100px;
         margin-top: 40px;
         margin-left: 400px;
         margin-bottom: 150px;
+        padding: 10px;
       }
-
+      a .btn-success {
+          transform: translateY(10px);
+        }
        .btn-danger{
         height: 50px;
         width: 80px;
@@ -112,12 +117,10 @@
 
       .btn-danger p{
         color: white;
-        margin-left: 
-      }
-
-      .p{
+        margin-left:20px; 
         transform: translateY(10px);
       }
+
 
       input{
         background-color:#F9F9F9;
@@ -134,7 +137,7 @@
 
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -171,12 +174,12 @@
 
 <div class="container">
     <div class="heading">
-      <h1>Edit "<?php echo $row["title"] ?>"</h1>
+      <center><h1>Edit "<?php echo $row["title"] ?>"</h1></center>
     </div>
     <hr>
-    <form class="updatemedia" method="POST" accept-charset="utf-8">
+    <form class="updatemedia" method="POST" accept-charset="utf-8" action="update.php">
       <p>Title</p>
-      <input class="field" type="text" name="title" value="">
+      <input class="field" type="text" name="title" value='<?php echo $row["title"] ?>'>
       <p>Author</p>
       <select class="field" name="author">
         <?php 
@@ -184,12 +187,12 @@
         $sql = mysqli_query($mysqli, "SELECT * FROM `author`");
 
         while($rowAuthor = mysqli_fetch_assoc($sql)){
-          echo "<option id=". $rowAuthor["author_id"]. ">". $rowAuthor["author_id"]. "  ". $rowAuthor["author_first_name"]. " ". $rowAuthor["author_last_name"]. "</option>";
+          echo "<option value='". $rowAuthor["author_Id"]. "'>". $rowAuthor["author_Id"]. "  ". $rowAuthor["author_first_name"]. " ". $rowAuthor["author_last_name"]. "</option>";
         }
         ?>
       </select>
       <p>Price</p>
-      <input class="price field" type="text" name="price" value ="<?php echo $row["borrow_price"] ?> ">
+      <input class="price field" type="text" name="price" value ="<?php echo $row['borrow_price'] ?> ">
       <p>Description</p>
       <textarea class="field" name="descrp"> <?php echo $row["descrp"] ?></textarea>
       <p>Publisher</p>
@@ -199,7 +202,7 @@
         $sql = mysqli_query($mysqli, "SELECT * FROM `publisher`");
 
         while($rowPublisher = mysqli_fetch_assoc($sql)){
-          echo "<option id=". $rowPublisher["publisher_id"]. ">". $rowPublisher["publisher_id"]. "  ". $rowPublisher["first_name"]. " ". $rowPublisher["last_name"]. "</option>";
+          echo "<option value='". $rowPublisher["publisher_Id"]. "'>". $rowPublisher["publisher_Id"]. "  ". $rowPublisher["first_name"]. " ". $rowPublisher["last_name"]. "</option>";
         }
 
         ?>
@@ -208,12 +211,13 @@
       <p></p>
         <div class="row">
           <div class="col-lg-3">
-      <?php echo "<a href='mediainfo.php?id=". $row['media_id']. "'><button class='btn btn-primary delete' type='button'>No go back</button></a>" ?>
+      <a href="update.php?id=<?php $_GET['id']?>&update" class="btn btn-success">Update</a>
     </div>
     <div class="col-lg-2">
-      <a href="index.php"><div class="btn-danger"><p>Back</p></div></a>
+      <a href="update.php"><div class="btn-danger"><p>Back</p></div></a>
    </div>
- </div>
+</div>
+</form>
 <footer id="myFoot" class="footer">        
         <div class="container">
             <div class="row">

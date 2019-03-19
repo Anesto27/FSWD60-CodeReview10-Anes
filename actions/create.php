@@ -17,15 +17,23 @@
     $publisher = $_POST['publisher'];
     $author = $_POST['author'];
     $isbn = $_POST['isbn'];
-    $descrp = $_POST['descrp'];
+    $descrp = $_POST['desc'];
     $price = $_POST['price'];
     $status = $_POST['status'];
     $library = $_POST['library'];
 
-    $sql = "INSERT INTO `media`(`title`, `image`, `ISBN`, `descrp`, `status`, `borrow_price`, `fk_author_id`, `fk_type_id`, `fk_publisher_id`, `fk_library_id`) VALUES ('$title', '$img', '$isbn', '$descrp', '$status', $price, '$author', '$type', '$publisher', '$library');";
+    $sql = "INSERT INTO `media`(`title`, `image`, `ISBN`, 
+    `descrp`, `status`, `borrow_price`, `fk_author_id`, 
+    `fk_type_id`, `fk_publisher_id`, `fk_library_id`) 
+    VALUES ('$title', '$img', '$isbn', '$descrp',
+     '$status',
+      $price,
+       $author
+     , $type,
+      $publisher, $library);";
 
     if($mysqli->query($sql) === TRUE) {
-       header("Location: a_create.php");
+       header("Location: index.php");
     } else {
         echo "Error while updating record : ". $mysqli->error;
     }
@@ -56,12 +64,7 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
-      .login{
-        display: flex;
-        flex-direction: column;
-        width: 35%;
-        margin: auto;
-      }
+      
       .field{
         height: 50px;
         margin: 15px 0;
@@ -79,10 +82,6 @@
         transform: translateY(50px);
       }
       
-      .p2{
-        transform: translateX(-400px);
-      }
-
       .btn-success{
         height: 50px;
         width: 100px;
@@ -90,42 +89,22 @@
         margin-left: 400px;
         margin-bottom: 150px;
       }
-
-       .btn-danger{
-        height: 50px;
-        width: 80px;
-        color: white;
-        background-color: red;
-        margin-top: 40px;
-        margin-left: 210px;
-        margin-bottom: 150px;
-        border-radius: 7px;
-      }
-
-      .btn-danger p{
-        color: white;
-        margin-left: 20px;
-     
-      }
-      .p{
-        transform: translateY(10px);
-      }
-
+  
       input{
         background-color:#F9F9F9;
 
       }
-      
-      .text2{
-        margin-bottom: 150px;
-        margin-top: 50px;
+      .navbar-brand p{
+        margin-top: -50px;
       }
-      
+      .fas{
+        margin-left: 200px;
+      }
     </style>
 
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -166,7 +145,7 @@
     </div>
     
     <hr>
-    <form class="updatemedia" method="POST" accept-charset="utf-8">
+    <form class="updatemedia" method="POST" accept-charset="utf-8" action="create.php">
       <p>Title</p>
       <input class="field" type="text" name="title" maxlength="350" required>
       <p>Media Image (url)</p>
@@ -174,10 +153,10 @@
       <p>Type</p>
       <select class="field" name="type">
         <?php
-        $sql = mysqli_query($mysqli, "SELECT * FROM `type`");
+        $sql = mysqli_query($mysqli, "SELECT type_id,typeName FROM `type`");
 
         while($rowType = mysqli_fetch_assoc($sql)){
-          echo "<option id=". $rowType["type_id"]. ">". $rowType["type_id"]. "  ". $rowType["typeName"]. "</option>";
+          echo "<option value='". $rowType["type_id"]. "'>". $rowType["type_id"]. "  ". $rowType["typeName"]. "</option>";
         }
         ?>
       </select>
@@ -188,7 +167,7 @@
         $sql = mysqli_query($mysqli, "SELECT * FROM `publisher`");
 
         while($rowPublisher = mysqli_fetch_assoc($sql)){
-          echo "<option id=". $rowPublisher["publisher_id"]. ">". $rowPublisher["publisher_id"]. "  ". $rowPublisher["first_name"]." ". $rowPublisher["last_name"]." </option>";
+          echo "<option value='". $rowPublisher["publisher_Id"]. "'>". $rowPublisher["publisher_Id"]. "  ". $rowPublisher["first_name"]." ". $rowPublisher["last_name"]." </option>";
         }
 
         ?>
@@ -199,7 +178,7 @@
         <?php 
         $sql = mysqli_query($mysqli, "SELECT * FROM `author`");
         while($rowAuthor = mysqli_fetch_assoc($sql)){
-          echo "<option id=". $rowAuthor["author_id"]. ">". $rowAuthor["author_id"]. "  ". $rowAuthor["author_first_name"]. " ". $rowAuthor["author_last_name"]. "</option>";
+          echo "<option value='". $rowAuthor["author_Id"]. "'>". $rowAuthor["author_Id"]. "  ". $rowAuthor["author_first_name"]. " ". $rowAuthor["author_last_name"]. "</option>";
         }
         ?>
       </select>
@@ -211,15 +190,15 @@
       <input class="field" class="price" type="text" name="price" required>€
       <p>Status</p>
       <select class="field" name="status">
-        <option value="0">0) Not available</option>
-        <option value="1">1) Available</option>
+        <option value='0'>0) Not available</option>
+        <option value='1'>1) Available</option>
       </select>
       <p>Library</p>
       <select class="field" name="library">
         <?php 
         $sql = mysqli_query($mysqli, "SELECT * FROM `library`");
         while($rowLibrary = mysqli_fetch_assoc($sql)){
-          echo "<option id=". $rowLibrary["library_id"]. ">". $rowLibrary["library_id"]. "  ". $rowLibrary["libraryName"]. "</option>";
+          echo "<option value='". $rowLibrary["library_id"]. "'>". $rowLibrary["library_id"]. "  ". $rowLibrary["name"]. "</option>";
         }
         ?>
       </select>
@@ -229,7 +208,6 @@
       <input class="btn btn-success" type="submit" name="create" value="CREATE">
     </div>
     <div class="col-lg-2">
-      <a class="mainpageback" href="index.php"><div class="btn-danger"><p class="p">Back</p></div></a>
     </div>
     </div>
     </form>

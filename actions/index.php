@@ -33,13 +33,22 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 
 <link rel="stylesheet" type="text/css" href="style.css">
-
+<style>
+    
+    #active a{
+      
+      padding-left: 150px;
+    }
+    .navbar-brand p{
+      margin-left: -50px;
+    }
+</style>
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     
   <nav class="navbar navbar-default">
-    <div class="container-fluid">
+    <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -59,7 +68,7 @@
       <?php
         if (isset($_SESSION['customer'])) {
           $displayName = $userRow['first_name']. " ". $userRow['last_name'];
-          echo '<i class="fas fa-sign-out-alt"></i> '.$displayName;
+          echo '<div class="btn-name"><button type="submit" class="btn btn-danger" href="logout.php">Logout</button>'.$displayName. '</div>';
         }
         else {
           echo '<i class="fas fa-sign-in-alt"></i> Login';
@@ -74,7 +83,7 @@
 <div class="container">
     <center><h1>Welcome to the Library!</h1></center>
     <hr class="hr">
-</div>
+
   <div class="button1">
     <?php 
         if(isset($_SESSION['customer'])){
@@ -117,8 +126,10 @@ else {
       }
    ?>
 
+   </div>
+
 <footer id="myFoot" class="footer">        
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="widget widget-text">

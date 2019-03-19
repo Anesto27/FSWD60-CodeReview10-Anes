@@ -52,35 +52,12 @@
         color: black;
         margin-top: 50px;
       }
-      .btn-success{
-        height: 50px;
-        width: 100px;
-        margin-top: 40px;
-
-      }
-
-       .btn-danger{
-        height: 50px;
-        width: 80px;
-        color: white;
-        background-color: red;
-      }
-
-      .btn-danger p{
-        color: white;
-        margin-left: 20px;
-        padding-top: 10px;
-         margin-top: 40px;
-      }
-
+    
       input{
         background-color:#F9F9F9;
       }
       
-      .text2{
-        margin-bottom: 150px;
-        margin-top: 50px;
-      }
+     
       
     </style>
 
@@ -99,7 +76,7 @@
         <span class="icon-bar"></span>
       </button>
      <img src="../img/logo.svg" alt="Foto" width=100px height=50px class="photo">
-      <a class="navbar-brand" href="#"><p>Library</p>
+      <a class="navbar-brand" href="#"><p>Panasdasdel</p>
     </div></a>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -107,14 +84,14 @@
       <ul class="nav navbar-nav">
         <li id="active"><a href="login.php" title="Login">
       <?php
-        if (isset($_SESSION['customer'])) {
-          $displayName = $userRow['first_name']. " ". $userRow['last_name'];
-          echo '<i class="fas fa-sign-out-alt"></i> '.$displayName;
-        }
-        else {
-          echo '<i class="fas fa-sign-in-alt"></i> Login';
-        }
-      ?>
+                if (isset($_SESSION['user'])) {
+                  $displayName = $userRow['Name']. " ". $userRow['Surname'];
+                  echo '<div class="btn-name" href="logout.php?logout">Logout</div>'.$displayName;
+                }
+                else {
+                  echo '<i class="fas fa-sign-in-alt"></i> Login';
+                }
+                ?>
       </a>
       </ul>
     </div>
